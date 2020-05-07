@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Панель Адміністратора</title>
+</head>
+<body>
+    <div>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Логиін</th>
+                <th>Пароль</th>
+                <th>Роль</th>
+            </tr>
+            <tr th:each="user : ${allUsers}">
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.username}"></td>
+                <td th:text="${user.password}"></td>
+                <td>
+                    <div th:each="role : ${user.roles}">
+                        <p th:text="${role.name}"></p>
+                    </div>
+                </td>
+                <td>
+                    <form action="/admin" method="post">
+                        <input type="hidden" name="userId" th:value="${user.id}">
+                        <input type="hidden" name="action" value="delete">
+                        <button type="submit">Видалити</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
