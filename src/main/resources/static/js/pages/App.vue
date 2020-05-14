@@ -1,25 +1,25 @@
 <template>
     <div class="wrapper">
-        <div class="header">
-            <div v-if="!user">
-                <a href="/login"><button>Вхід</button></a>
-                <a href="/registration"><button>Реєстрація</button></a>
-            </div>
-            <div v-else>
-                <p>{{user}}</p>
-                <a href="/logout"><button>Вихід</button></a>
-            </div>
+        <header-block :user="user"></header-block>
+        <div class="content">
+            <institution v-if="user"></institution>
+            <router-view></router-view>
         </div>
-        <div class="content"></div>
         <div class="footer"></div>
     </div>
 </template>
 <script>
+    import HeaderBlock from "../components/HeaderBlock.vue";
+    import Institution from "../components/Institutions.vue";
+
     export default {
         data() {
             return {
                 user: frontendData.username
             }
+        },
+        components: {
+            HeaderBlock, Institution
         }
     }
 </script>

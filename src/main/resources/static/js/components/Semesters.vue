@@ -1,0 +1,132 @@
+<template>
+    <div class="wrapper">
+        <div class="wrapper__semester">
+            <div class="panel panel-default col-md-8 col-md-offset-2">
+                <div class="semester-header">
+                    <h3>Мої семестри у закладі <b>{{institution.name}}</b></h3>
+                </div>
+                <div class="semester-content">
+                    <div v-if="semesters.length > 0">
+                        <table>
+                            <tr>
+                                <th>id</th>
+                                <th>Назва</th>
+                                <th>Початок</th>
+                                <th>Кінец</th>
+                            </tr>
+                            <tr v-for="semester in semesters">
+                                <td>{{semester.id}}</td>
+<!--                                <td><router-link :to="'/my-faculties/' + semester.id + '/' + semester.name"><button>{{semester.name}}</button></router-link></td>-->
+                                <td><button @click="switchSemester(semester)">{{semester.name}}</button></td>
+                                <td>{{semester.start}}</td>
+                                <td>{{semester.finish}}</td>
+                                <td><span class="glyphicon glyphicon-remove" @click="removeSemester(semester.id)"></span></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div v-else>
+                        <p>Список семестрів порожній</p>
+                    </div>
+                </div>
+                <div class="semester-footer">
+                    <input type="text" placeholder="Назва семестру" v-model="newSemester.name">
+                    Початок: <input type="date" v-model="newSemester.start">
+                    Кінец: <input type="date" v-model="newSemester.finish">
+                    <button @click="addSemester">Додати</button>
+                </div>
+            </div>
+            <span class="glyphicon glyphicon-remove" @click="close"></span>
+        </div>
+        <component v-if="currentSemester" is="faculties" :semester="currentSemester" @closeFaculty="closeFaculty"></component>
+    </div>
+</template>
+<script>
+    import Faculties from "./Faculties.vue";
+
+    function getIndexItemById(list, id) {
+        for (let i = 0; list.length; i++) {
+            if (list[i].id === id) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    export default {
+        props: ["institution"],
+        data() {
+            return {
+                currentSemester: null,
+
+                semesterApi: this.$resource("/semesters{/id}"),
+                semesters: [],
+                newSemester: {
+                    name: "",
+                    start: null,
+                    finish: null
+                }
+            }
+        },
+        components: {
+            Faculties
+        },
+        watch: {
+            institution() {
+                this.getSemesterFromDb(this.institution.id);
+                this.currentSemester = null
+            }
+        },
+        created() {
+            this.getSemesterFromDb(this.institution.id);
+
+        },
+        methods: {
+            close() {
+                this.$emit("closeSemester", true);
+            },
+            closeFaculty(data) {
+                if (data) {
+                    this.currentSemester = null;
+                }
+            },
+            switchSemester(semester) {
+                this.currentSemester = semester;
+            },
+            getSemesterFromDb(id) {
+                this.semesters = [];
+                this.semesterApi.get({id: id}).then(res => {
+                    res.json().then(data => {
+                        data.forEach(semester => {
+                            this.semesters.push(semester);
+                        })
+                    })
+                })
+            },
+            addSemester() {
+                this.newSemester.start = new Date(this.newSemester.start).getTime();
+                this.newSemester.finish = new Date(this.newSemester.finish).getTime();
+
+                this.semesterApi.save({id: this.institution.id}, this.newSemester).then(res => {
+                    res.json().then(data => {
+                        this.semesters.push(data)
+                    })
+                });
+
+                this.newSemester.name = "";
+                this.newSemester.start = null;
+                this.newSemester.finish = null;
+            },
+            removeSemester(id) {
+                this.semesterApi.delete({id: id}).then(res => {
+                    if (res.ok) {
+                        let index = getIndexItemById(this.semesters, id);
+                        this.semesters.splice(index, 1);
+                    }
+                })
+            }
+        }
+    }
+</script>
+<style scoped>
+
+</style>

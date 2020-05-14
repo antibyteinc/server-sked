@@ -18,6 +18,7 @@ public class MainController {
         HashMap<String, Object> data = new HashMap<>();
 
         if (user != null) {
+            data.put("id", user.getId());
             data.put("username", user.getUsername());
         }
 
