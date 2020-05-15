@@ -1,9 +1,9 @@
-package server.controller.rest;
+package server.controller.rest.institution;
 
 import org.springframework.web.bind.annotation.*;
-import server.domain.Faculty;
-import server.domain.Semester;
-import server.repo.FacultyRepo;
+import server.domain.institution.Faculty;
+import server.domain.institution.Semester;
+import server.repo.institution.FacultyRepo;
 
 import java.util.List;
 

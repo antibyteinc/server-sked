@@ -1,20 +1,20 @@
-package server.domain;
+package server.domain.institution;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "department")
-public class Department {
+@Table(name = "faculty")
+public class Faculty {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_course")
-    private Course course;
+    @JoinColumn(name = "id_semester")
+    private Semester semester;
 
-    public Department() {
+    public Faculty() {
     }
 
     public Long getId() {
@@ -33,11 +33,11 @@ public class Department {
         this.name = name;
     }
 
-    public Course getCourse() {
-        return course;
+    public Semester getSemester() {
+        return semester;
     }
 
-    public void setCourse(Course course) {
-        this.course = course;
+    public void setSemester(Semester semester) {
+        this.semester = semester;
     }
 }

@@ -2,11 +2,11 @@
     <div class="wrapper__group">
         <div class="groups" v-if="groups.length > 0">
             <div class="group" v-for="group in groups">
-                <button>{{group.name}}</button>
+                <router-link :to="'/schedule/' + group.id"><button>{{group.name}}</button></router-link>
                 <span class="glyphicon glyphicon-remove" @click="removeGroup(group.id)"></span>
             </div>
         </div>
-        <div class="group" v-else>
+        <div class="groups" v-else>
             <p>Список груп порожній</p>
         </div>
         <div class="group-form">

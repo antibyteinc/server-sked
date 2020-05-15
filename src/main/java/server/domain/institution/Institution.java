@@ -1,4 +1,4 @@
-package server.domain;
+package server.domain.institution;
 
 import server.domain.security.User;
 

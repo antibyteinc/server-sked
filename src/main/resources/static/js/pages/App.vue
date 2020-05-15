@@ -1,11 +1,8 @@
 <template>
     <div class="wrapper">
         <header-block :user="user"></header-block>
-        <div class="content">
-            <institution v-if="user"></institution>
-            <router-view></router-view>
-        </div>
-        <div class="footer"></div>
+        <router-link to="/my-institutions">Мої інститути</router-link>
+        <router-view></router-view>
     </div>
 </template>
 <script>

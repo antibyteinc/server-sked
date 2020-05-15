@@ -1,8 +1,8 @@
-package server.repo;
+package server.repo.institution;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import server.domain.Department;
-import server.domain.Group;
+import server.domain.institution.Department;
+import server.domain.institution.Group;
 
 import java.util.List;
 

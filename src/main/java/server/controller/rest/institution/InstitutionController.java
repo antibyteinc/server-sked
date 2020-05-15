@@ -1,10 +1,10 @@
-package server.controller.rest;
+package server.controller.rest.institution;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import server.domain.Institution;
+import server.domain.institution.Institution;
 import server.domain.security.User;
-import server.repo.InstitutionRepo;
+import server.repo.institution.InstitutionRepo;
 
 import java.util.Date;
 import java.util.List;

@@ -1,4 +1,4 @@
-package server.domain;
+package server.domain.institution;
 
 import javax.persistence.*;
 

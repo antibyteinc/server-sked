@@ -1,9 +1,8 @@
-package server.controller.rest;
+package server.controller.rest.institution;
 
 import org.springframework.web.bind.annotation.*;
-import server.domain.Department;
-import server.domain.Group;
-import server.repo.GroupRepo;
+import server.domain.institution.*;
+import server.repo.institution.GroupRepo;
 
 import java.util.List;
 
@@ -20,6 +19,17 @@ public class GroupController {
     @GetMapping("{id}")
     public List<Group> getByDepartment(@PathVariable("id") Department department) {
         return groupRepo.findByDepartment(department);
+    }
+
+    @GetMapping("/get-institution-id/{id}")
+    public Long getById(@PathVariable("id") Group group) {
+        Department department = group.getDepartment();
+        Course course = department.getCourse();
+        Faculty faculty = course.getFaculty();
+        Semester semester = faculty.getSemester();
+        Institution institution = semester.getInstitution();
+
+        return institution.getId();
     }
 
     @PostMapping("{id}")
