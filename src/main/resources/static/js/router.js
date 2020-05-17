@@ -1,19 +1,22 @@
 import Vue from "vue"
 import VueRouter from "vue-router"
 
-import Semester from "./components/Semesters.vue";
-import Faculty from "./components/Faculties.vue";
-
-import Schedule from "./pages/Schedule.vue";
 import Institutions from "./components/Institutions.vue";
+import Schedule from "./pages/Schedule.vue";
+import Teachers from "./components/schedule/Teachers.vue";
+import Lesson from "./components/schedule/Lesson.vue";
+import Classroom from "./components/schedule/Classroom.vue";
+// import InstitutionPage from "./pages/InstitutionPage.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
-    { path: "/my-semesters/:institutionId/:institutionName", component: Semester, props: true },
-    { path: "/my-faculties/:semesterId/:semesterName", component: Faculty, props: true },
-    { path: "/schedule/:groupId", component: Schedule, props: true },
-    {path: "/my-institutions", component: Institutions}
+    {path: "/my-institutions", component: Institutions},
+    {path: "/schedule/:groupId", component: Schedule, props: true},
+    {path: "/my-teachers/:institutionId", component: Teachers, props: true},
+    {path: "/my-lessons/:institutionId", component: Lesson, props: true},
+    {path: "/my-classrooms/:institutionId", component: Classroom, props: true},
+    // {path: "/institution-page/:insId", component: InstitutionPage, props: true}
 ];
 
 export default new VueRouter({

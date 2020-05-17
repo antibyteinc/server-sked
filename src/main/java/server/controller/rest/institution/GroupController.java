@@ -4,7 +4,9 @@ import org.springframework.web.bind.annotation.*;
 import server.domain.institution.*;
 import server.repo.institution.GroupRepo;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/groups")
@@ -21,15 +23,22 @@ public class GroupController {
         return groupRepo.findByDepartment(department);
     }
 
-    @GetMapping("/get-institution-id/{id}")
-    public Long getById(@PathVariable("id") Group group) {
-        Department department = group.getDepartment();
-        Course course = department.getCourse();
-        Faculty faculty = course.getFaculty();
-        Semester semester = faculty.getSemester();
-        Institution institution = semester.getInstitution();
+    @GetMapping("/get-name/{id}")
+    public String getNameById(@PathVariable("id") Group group) {
+        return group.getName();
+    }
 
-        return institution.getId();
+    @GetMapping("/get-semesterRange/{id}")
+    public Map<String, Long> getSemesterRangeById(@PathVariable("id") Group group) {
+        Semester semester = group.getDepartment().getCourse().getFaculty().getSemester();
+        Long start = semester.getStart();
+        Long finish = semester.getFinish();
+
+        Map<String, Long> semesterRange = new HashMap<>();
+        semesterRange.put("start", start);
+        semesterRange.put("finish", finish);
+
+        return semesterRange;
     }
 
     @PostMapping("{id}")

@@ -14,8 +14,13 @@
                         </tr>
                         <tr v-for="institution in institutions" :key="institution.id">
                             <td>{{institution.id}}</td>
-<!--                            <td><router-link :to="'/my-semesters/' + institution.id + '/' + institution.name"><button>{{institution.name}}</button></router-link></td>-->
-                            <td><button @click="switchInstitution(institution)">{{institution.name}}</button></td>
+                            <td>
+                                <button @click="switchInstitution(institution)">{{institution.name}}</button>
+<!--                                <router-link :to="'/institution-page/' + institution.id"><button>Сторінка інституту</button></router-link>-->
+                                <router-link :to="'/my-teachers/' + institution.id"><button>Викладачі</button></router-link>
+                                <router-link :to="'/my-lessons/' + institution.id"><button>Предмети</button></router-link>
+                                <router-link :to="'/my-classrooms/' + institution.id"><button>Аудиторії</button></router-link>
+                            </td>
                             <td>{{institution.lastModified}}</td>
                             <td><span class="glyphicon glyphicon-remove" @click="removeInstitution(institution.id)"></span></td>
                         </tr>
@@ -117,6 +122,6 @@
     }
 
     .institution {
-        width: 50%;
+        /*width: 50%;*/
     }
 </style>

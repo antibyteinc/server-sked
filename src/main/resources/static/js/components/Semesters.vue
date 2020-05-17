@@ -18,8 +18,8 @@
                                 <td>{{semester.id}}</td>
 <!--                                <td><router-link :to="'/my-faculties/' + semester.id + '/' + semester.name"><button>{{semester.name}}</button></router-link></td>-->
                                 <td><button @click="switchSemester(semester)">{{semester.name}}</button></td>
-                                <td>{{semester.start}}</td>
-                                <td>{{semester.finish}}</td>
+                                <td>{{dateToString(semester.start)}}</td>
+                                <td>{{dateToString(semester.finish)}}</td>
                                 <td><span class="glyphicon glyphicon-remove" @click="removeSemester(semester.id)"></span></td>
                             </tr>
                         </table>
@@ -52,6 +52,21 @@
         return -1;
     }
 
+    function dateLongToString(date) {
+        date = new Date(date);
+        // let strMonth = ["січ", "лют", "бер", "квіт", "трав", "черв", "лип", "серп", "вер", "жовт", "лист", "груд"];
+
+        let d = date.getDate();
+        // let m = strMonth[date.getMonth()];
+        let m = date.getMonth() + 1;
+        let y = date.getFullYear();
+        // let h = date.getHours();
+        // let min = date.getMinutes();
+        // let s = date.getSeconds();
+
+        return "" + (d <= 9 ? '0' + d : d) + "." + (m <= 9 ? '0' + m : m) + "." + y;
+    }
+
     export default {
         props: ["institution"],
         data() {
@@ -81,6 +96,9 @@
 
         },
         methods: {
+            dateToString(date) {
+                return dateLongToString(date)
+            },
             close() {
                 this.$emit("closeSemester", true);
             },

@@ -1,6 +1,9 @@
 <template>
     <div class="wrapper__type-lesson">
         <div class="panel panel-default col-md-8 col-md-offset-2">
+            <div>
+                <h3>Тип предмету</h3>
+            </div>
             <div class="type-lesson-form">
                 <input type="text" placeholder="Назва типу предмету" v-model="newTypeLesson.name">
                 <button @click="addTypeLesson">Додати</button>
@@ -38,39 +41,20 @@
     }
 
     export  default {
-        props: ["groupId"],
+        props: ["institutionId"],
         data() {
             return {
-                groupApi: this.$resource("/groups/get-institution-id{/id}"),
-                institutionId: 0,
-
                 typeLessonApi: this.$resource("/type-lessons{/id}"),
-
                 typeLessons: [],
                 newTypeLesson: {
                     name: "",
                 },
-                institution: null
-            }
-        },
-        watch: {
-            institutionId() {
-                this.getTypeLessonFromDb();
             }
         },
         created() {
-            this.getInstitutionId();
-            this.getInstitutionId();
             this.getTypeLessonFromDb();
         },
         methods: {
-            getInstitutionId() {
-                this.groupApi.get({id: this.groupId}).then(res => {
-                    res.json().then(data => {
-                        this.institutionId = data;
-                    });
-                });
-            },
             getTypeLessonFromDb() {
                 this.typeLessons = [];
                 this.typeLessonApi.get({id: this.institutionId}).then(res => {

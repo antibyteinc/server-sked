@@ -1,6 +1,10 @@
 <template>
     <div class="wrapper__teacher">
         <div class="panel panel-default col-md-8 col-md-offset-2">
+            <div>
+                <h3>{{institutionName}}</h3>
+                <h3>Викладачі</h3>
+            </div>
             <div class="teacher-form">
                 <input type="text" placeholder="Призвище" v-model="newTeacher.surname">
                 <input type="text" placeholder="Ім'я" v-model="newTeacher.name">
@@ -56,12 +60,10 @@
     }
 
     export  default {
-        props: ["groupId"],
+        props: ["institutionId"],
         data() {
             return {
-                groupApi: this.$resource("/groups/get-institution-id{/id}"),
-                institutionId: 0,
-
+                institutionName: "",
                 teacherApi: this.$resource("/teachers{/id}"),
 
                 teachers: [],
@@ -74,26 +76,19 @@
                     phoneNumber: "",
                     mail: ""
                 },
-                institution: null
-            }
-        },
-        watch: {
-            institutionId() {
-                this.getTeacherFromDb();
             }
         },
         created() {
-            this.getInstitutionId();
-            this.getInstitutionId();
+            this.getInstitutionName();
             this.getTeacherFromDb();
         },
         methods: {
-            getInstitutionId() {
-                this.groupApi.get({id: this.groupId}).then(res => {
-                    res.json().then(data => {
-                        this.institutionId = data;
+            getInstitutionName() {
+                this.$resource("/institutions/get-name{/id}").get({id: this.institutionId}).then(res => {
+                    res.text().then(data => {
+                        this.institutionName = data;
                     });
-                });
+                })
             },
             getTeacherFromDb() {
                 this.teachers = [];
@@ -106,8 +101,6 @@
                 })
             },
             addTeacher() {
-                // this.getInstitutionId();
-
                 this.teacherApi.save({id: this.institutionId}, this.newTeacher).then(res => {
                     res.json().then(data => {
                         this.teachers.push(data)

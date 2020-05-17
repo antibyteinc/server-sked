@@ -1,6 +1,10 @@
 <template>
     <div class="wrapper__lesson">
         <div class="panel panel-default col-md-8 col-md-offset-2">
+            <div>
+                <h3>{{institutionName}}</h3>
+                <h3>Предмети</h3>
+            </div>
             <div class="lesson-form">
                 <input type="text" placeholder="Назва предмету" v-model="newLesson.name">
                 <button @click="addLesson">Додати</button>
@@ -25,9 +29,12 @@
                 <p>Список предметів порожній</p>
             </div>
         </div>
+        <type-lesson :institution-id="institutionId"></type-lesson>
     </div>
 </template>
 <script>
+    import TypeLesson from "./TypeLesson.vue";
+
     function getIndexItemById(list, id) {
         for (let i = 0; list.length; i++) {
             if (list[i].id === id) {
@@ -38,38 +45,31 @@
     }
 
     export  default {
-        props: ["groupId"],
+        props: ["institutionId"],
+        components: {
+            TypeLesson
+        },
         data() {
             return {
-                groupApi: this.$resource("/groups/get-institution-id{/id}"),
-                institutionId: 0,
-
+                institutionName: "",
                 lessonApi: this.$resource("/lessons{/id}"),
-
                 lessons: [],
                 newLesson: {
                     name: "",
                 },
-                institution: null
-            }
-        },
-        watch: {
-            institutionId() {
-                this.getLessonFromDb();
             }
         },
         created() {
-            this.getInstitutionId();
-            this.getInstitutionId();
+            this.getInstitutionName();
             this.getLessonFromDb();
         },
         methods: {
-            getInstitutionId() {
-                this.groupApi.get({id: this.groupId}).then(res => {
-                    res.json().then(data => {
-                        this.institutionId = data;
+            getInstitutionName() {
+                this.$resource("/institutions/get-name{/id}").get({id: this.institutionId}).then(res => {
+                    res.text().then(data => {
+                        this.institutionName = data;
                     });
-                });
+                })
             },
             getLessonFromDb() {
                 this.lessons = [];

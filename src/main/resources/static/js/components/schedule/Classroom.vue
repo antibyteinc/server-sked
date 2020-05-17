@@ -1,6 +1,10 @@
 <template>
     <div class="wrapper__classroom">
         <div class="panel panel-default col-md-8 col-md-offset-2">
+            <div>
+                <h3>{{institutionName}}</h3>
+                <h3>Аудиторії</h3>
+            </div>
             <div class="classroom-form">
                 <input type="text" placeholder="Корпус" v-model="newClassroom.building">
                 <input type="text" placeholder="Кабінет" v-model="newClassroom.cabinet">
@@ -44,40 +48,30 @@
     }
 
     export  default {
-        props: ["groupId"],
+        props: ["institutionId"],
         data() {
             return {
-                groupApi: this.$resource("/groups/get-institution-id{/id}"),
-                institutionId: 0,
-
+                institutionName: "",
                 classroomApi: this.$resource("/classrooms{/id}"),
-
                 classrooms: [],
                 newClassroom: {
                     building: "",
                     cabinet: "",
                     name: "",
                 },
-                institution: null
-            }
-        },
-        watch: {
-            institutionId() {
-                this.getClassroomFromDb();
             }
         },
         created() {
-            this.getInstitutionId();
-            this.getInstitutionId();
+            this.getInstitutionName();
             this.getClassroomFromDb();
         },
         methods: {
-            getInstitutionId() {
-                this.groupApi.get({id: this.groupId}).then(res => {
-                    res.json().then(data => {
-                        this.institutionId = data;
+            getInstitutionName() {
+                this.$resource("/institutions/get-name{/id}").get({id: this.institutionId}).then(res => {
+                    res.text().then(data => {
+                        this.institutionName = data;
                     });
-                });
+                })
             },
             getClassroomFromDb() {
                 this.classrooms = [];
