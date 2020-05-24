@@ -1,8 +1,10 @@
 package server.controller.rest.schedule;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import server.domain.institution.Institution;
 import server.domain.schedule.Teacher;
+import server.domain.security.User;
 import server.repo.schedule.TeacherRepo;
 
 import java.util.List;
@@ -17,14 +19,14 @@ public class TeacherController {
         this.teacherRepo = teacherRepo;
     }
 
-    @GetMapping("{id}")
-    public List<Teacher> getByInstitution(@PathVariable("id")Institution institution) {
-        return teacherRepo.findByInstitution(institution);
+    @GetMapping()
+    public List<Teacher> getForUser(@AuthenticationPrincipal User user) {
+        return teacherRepo.findByUser(user);
     }
 
-    @PostMapping("{id}")
-    public Teacher add(@PathVariable("id") Institution institution, @RequestBody Teacher teacher) {
-        teacher.setInstitution(institution);
+    @PostMapping()
+    public Teacher add(@AuthenticationPrincipal User user, @RequestBody Teacher teacher) {
+        teacher.setUser(user);
         return teacherRepo.save(teacher);
     }
 

@@ -2,7 +2,6 @@
     <div class="wrapper__classroom">
         <div class="panel panel-default col-md-8 col-md-offset-2">
             <div>
-                <h3>{{institutionName}}</h3>
                 <h3>Аудиторії</h3>
             </div>
             <div class="classroom-form">
@@ -48,10 +47,8 @@
     }
 
     export  default {
-        props: ["institutionId"],
         data() {
             return {
-                institutionName: "",
                 classroomApi: this.$resource("/classrooms{/id}"),
                 classrooms: [],
                 newClassroom: {
@@ -62,20 +59,12 @@
             }
         },
         created() {
-            this.getInstitutionName();
             this.getClassroomFromDb();
         },
         methods: {
-            getInstitutionName() {
-                this.$resource("/institutions/get-name{/id}").get({id: this.institutionId}).then(res => {
-                    res.text().then(data => {
-                        this.institutionName = data;
-                    });
-                })
-            },
             getClassroomFromDb() {
                 this.classrooms = [];
-                this.classroomApi.get({id: this.institutionId}).then(res => {
+                this.classroomApi.get().then(res => {
                     res.json().then(data => {
                         data.forEach(classroom => {
                             this.classrooms.push(classroom);
@@ -84,7 +73,7 @@
                 })
             },
             addClassroom() {
-                this.classroomApi.save({id: this.institutionId}, this.newClassroom).then(res => {
+                this.classroomApi.save(this.newClassroom).then(res => {
                     res.json().then(data => {
                         this.classrooms.push(data)
                     })

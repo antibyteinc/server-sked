@@ -1,8 +1,10 @@
 package server.controller.rest.schedule;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import server.domain.institution.Institution;
 import server.domain.schedule.TypeLesson;
+import server.domain.security.User;
 import server.repo.schedule.TypeLessonRepo;
 
 import java.util.List;
@@ -17,14 +19,14 @@ public class TypeLessonController {
         this.typeLessonRepo = typeLessonRepo;
     }
 
-    @GetMapping("{id}")
-    public List<TypeLesson> getByInstitution(@PathVariable("id") Institution institution) {
-        return typeLessonRepo.findByInstitution(institution);
+    @GetMapping()
+    public List<TypeLesson> getByUser(@AuthenticationPrincipal User user) {
+        return typeLessonRepo.findByUser(user);
     }
 
-    @PostMapping("{id}")
-    public TypeLesson add(@PathVariable("id") Institution institution, @RequestBody TypeLesson typeLesson) {
-        typeLesson.setInstitution(institution);
+    @PostMapping()
+    public TypeLesson add(@AuthenticationPrincipal User user, @RequestBody TypeLesson typeLesson) {
+        typeLesson.setUser(user);
         return typeLessonRepo.save(typeLesson);
     }
 

@@ -1,13 +1,13 @@
 <template>
     <div class="wrapper">
         <header-block :user="user"></header-block>
-        <router-link to="/my-institutions">Мої інститути</router-link>
+        <main-page v-if="!user"></main-page>
         <router-view></router-view>
     </div>
 </template>
 <script>
     import HeaderBlock from "../components/HeaderBlock.vue";
-    import Institution from "../components/Institutions.vue";
+    import MainPage from "./MainPage.vue";
 
     export default {
         data() {
@@ -16,7 +16,7 @@
             }
         },
         components: {
-            HeaderBlock, Institution
+            HeaderBlock, MainPage
         }
     }
 </script>

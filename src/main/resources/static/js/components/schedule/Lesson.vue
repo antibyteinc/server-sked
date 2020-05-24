@@ -2,7 +2,6 @@
     <div class="wrapper__lesson">
         <div class="panel panel-default col-md-8 col-md-offset-2">
             <div>
-                <h3>{{institutionName}}</h3>
                 <h3>Предмети</h3>
             </div>
             <div class="lesson-form">
@@ -29,7 +28,7 @@
                 <p>Список предметів порожній</p>
             </div>
         </div>
-        <type-lesson :institution-id="institutionId"></type-lesson>
+        <type-lesson></type-lesson>
     </div>
 </template>
 <script>
@@ -45,13 +44,11 @@
     }
 
     export  default {
-        props: ["institutionId"],
         components: {
             TypeLesson
         },
         data() {
             return {
-                institutionName: "",
                 lessonApi: this.$resource("/lessons{/id}"),
                 lessons: [],
                 newLesson: {
@@ -60,20 +57,12 @@
             }
         },
         created() {
-            this.getInstitutionName();
             this.getLessonFromDb();
         },
         methods: {
-            getInstitutionName() {
-                this.$resource("/institutions/get-name{/id}").get({id: this.institutionId}).then(res => {
-                    res.text().then(data => {
-                        this.institutionName = data;
-                    });
-                })
-            },
             getLessonFromDb() {
                 this.lessons = [];
-                this.lessonApi.get({id: this.institutionId}).then(res => {
+                this.lessonApi.get().then(res => {
                     res.json().then(data => {
                         data.forEach(lesson => {
                             this.lessons.push(lesson);
@@ -82,7 +71,7 @@
                 })
             },
             addLesson() {
-                this.lessonApi.save({id: this.institutionId}, this.newLesson).then(res => {
+                this.lessonApi.save(this.newLesson).then(res => {
                     res.json().then(data => {
                         this.lessons.push(data)
                     })

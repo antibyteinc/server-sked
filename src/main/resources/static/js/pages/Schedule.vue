@@ -294,7 +294,7 @@
             },
             getLessonsFromDb() {
                 this.lessons = [];
-                this.$resource("/lessons{/id}").get({id: this.institutionId}).then(res => {
+                this.$resource("/lessons{/id}").get().then(res => {
                     res.json().then(data => {
                         data.forEach(lesson => {
                             this.lessons.push(lesson);
@@ -304,7 +304,7 @@
             },
             getLessonsTypeFromDb() {
                 this.lessonsType = [];
-                this.$resource("/type-lessons{/id}").get({id: this.institutionId}).then(res => {
+                this.$resource("/type-lessons{/id}").get().then(res => {
                     res.json().then(data => {
                         data.forEach(type => {
                             this.lessonsType.push(type);
@@ -314,7 +314,7 @@
             },
             getTeachersFromDb() {
                 this.lessons = [];
-                this.$resource("/teachers{/id}").get({id: this.institutionId}).then(res => {
+                this.$resource("/teachers{/id}").get().then(res => {
                     res.json().then(data => {
                         data.forEach(teacher => {
                             this.teachers.push(teacher);

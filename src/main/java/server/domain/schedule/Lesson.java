@@ -1,6 +1,6 @@
 package server.domain.schedule;
 
-import server.domain.institution.Institution;
+import server.domain.security.User;
 
 import javax.persistence.*;
 
@@ -13,8 +13,8 @@ public class Lesson {
     private Long id;
     private String name;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_institution")
-    private Institution institution;
+    @JoinColumn(name = "id_user")
+    private User user;
 
     public Lesson() {
     }
@@ -35,11 +35,11 @@ public class Lesson {
         this.name = name;
     }
 
-    public Institution getInstitution() {
-        return institution;
+    public User getUser() {
+        return user;
     }
 
-    public void setInstitution(Institution institution) {
-        this.institution = institution;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

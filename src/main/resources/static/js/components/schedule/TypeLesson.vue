@@ -41,7 +41,6 @@
     }
 
     export  default {
-        props: ["institutionId"],
         data() {
             return {
                 typeLessonApi: this.$resource("/type-lessons{/id}"),
@@ -57,7 +56,7 @@
         methods: {
             getTypeLessonFromDb() {
                 this.typeLessons = [];
-                this.typeLessonApi.get({id: this.institutionId}).then(res => {
+                this.typeLessonApi.get().then(res => {
                     res.json().then(data => {
                         data.forEach(lesson => {
                             this.typeLessons.push(lesson);
@@ -66,7 +65,7 @@
                 })
             },
             addTypeLesson() {
-                this.typeLessonApi.save({id: this.institutionId}, this.newTypeLesson).then(res => {
+                this.typeLessonApi.save(this.newTypeLesson).then(res => {
                     res.json().then(data => {
                         this.typeLessons.push(data)
                     })

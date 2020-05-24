@@ -1,8 +1,9 @@
 package server.controller.rest.schedule;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import server.domain.schedule.Classroom;
-import server.domain.institution.Institution;
+import server.domain.security.User;
 import server.repo.schedule.ClassroomRepo;
 
 import java.util.List;
@@ -17,14 +18,14 @@ public class ClassroomController {
         this.classroomRepo = classroomRepo;
     }
 
-    @GetMapping("{id}")
-    public List<Classroom> getByInstitution(@PathVariable("id") Institution institution) {
-        return classroomRepo.findByInstitution(institution);
+    @GetMapping()
+    public List<Classroom> getByInstitution(@AuthenticationPrincipal User user) {
+        return classroomRepo.findByUser(user);
     }
 
-    @PostMapping("{id}")
-    public Classroom add(@PathVariable("id") Institution institution, @RequestBody Classroom classroom) {
-        classroom.setInstitution(institution);
+    @PostMapping()
+    public Classroom add(@AuthenticationPrincipal User user, @RequestBody Classroom classroom) {
+        classroom.setUser(user);
         return classroomRepo.save(classroom);
     }
 

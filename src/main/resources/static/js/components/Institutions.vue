@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <div class="wrapper__institution panel panel-default col-md-8 col-md-offset-2">
-            <h3>Мої інститути</h3>
+            <h3>Мої розклади</h3>
             <div class="institutions">
                 <div v-if="institutions.length > 0">
                     <table class="institution">
@@ -16,10 +16,6 @@
                             <td>{{institution.id}}</td>
                             <td>
                                 <button @click="switchInstitution(institution)">{{institution.name}}</button>
-<!--                                <router-link :to="'/institution-page/' + institution.id"><button>Сторінка інституту</button></router-link>-->
-                                <router-link :to="'/my-teachers/' + institution.id"><button>Викладачі</button></router-link>
-                                <router-link :to="'/my-lessons/' + institution.id"><button>Предмети</button></router-link>
-                                <router-link :to="'/my-classrooms/' + institution.id"><button>Аудиторії</button></router-link>
                             </td>
                             <td>{{institution.lastModified}}</td>
                             <td><span class="glyphicon glyphicon-remove" @click="removeInstitution(institution.id)"></span></td>
@@ -27,11 +23,11 @@
                     </table>
                 </div>
                 <div v-else>
-                    <p>Список інститутів порожній</p>
+                    <p>Список розкладів порожній</p>
                 </div>
             </div>
             <div class="institution-panel">
-                <input type="text" placeholder="Назва інституту" v-model="newInstitution.name">
+                <input type="text" placeholder="Назва розкладу" v-model="newInstitution.name">
                 <button @click="addInstitution">Додати</button>
             </div>
         </div>

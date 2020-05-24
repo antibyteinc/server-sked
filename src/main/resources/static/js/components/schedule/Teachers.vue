@@ -2,7 +2,6 @@
     <div class="wrapper__teacher">
         <div class="panel panel-default col-md-8 col-md-offset-2">
             <div>
-                <h3>{{institutionName}}</h3>
                 <h3>Викладачі</h3>
             </div>
             <div class="teacher-form">
@@ -63,7 +62,6 @@
         props: ["institutionId"],
         data() {
             return {
-                institutionName: "",
                 teacherApi: this.$resource("/teachers{/id}"),
 
                 teachers: [],
@@ -79,20 +77,12 @@
             }
         },
         created() {
-            this.getInstitutionName();
             this.getTeacherFromDb();
         },
         methods: {
-            getInstitutionName() {
-                this.$resource("/institutions/get-name{/id}").get({id: this.institutionId}).then(res => {
-                    res.text().then(data => {
-                        this.institutionName = data;
-                    });
-                })
-            },
             getTeacherFromDb() {
                 this.teachers = [];
-                this.teacherApi.get({id: this.institutionId}).then(res => {
+                this.teacherApi.get().then(res => {
                     res.json().then(data => {
                         data.forEach(teacher => {
                             this.teachers.push(teacher);
@@ -101,7 +91,7 @@
                 })
             },
             addTeacher() {
-                this.teacherApi.save({id: this.institutionId}, this.newTeacher).then(res => {
+                this.teacherApi.save(this.newTeacher).then(res => {
                     res.json().then(data => {
                         this.teachers.push(data)
                     })
