@@ -1,6 +1,6 @@
 package server.domain.schedule;
 
-import server.domain.institution.Group;
+import server.domain.division.Group;
 
 import javax.persistence.*;
 

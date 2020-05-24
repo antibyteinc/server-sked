@@ -1,13 +1,12 @@
 <template>
     <div class="wrapper">
         <header-block :user="user"></header-block>
-        <main-page v-if="!user"></main-page>
         <router-view></router-view>
     </div>
 </template>
 <script>
-    import HeaderBlock from "../components/HeaderBlock.vue";
-    import MainPage from "./MainPage.vue";
+    import HeaderBlock from "../components/header/HeaderBlock.vue";
+    import MainPage from "./Main.vue";
 
     export default {
         data() {

@@ -1,14 +1,14 @@
 package server.controller.rest.schedule;
 
 import org.springframework.web.bind.annotation.*;
-import server.domain.institution.Group;
+import server.domain.division.Group;
 import server.domain.schedule.Schedule;
 import server.repo.schedule.ScheduleRepo;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/schedules")
+@RequestMapping("/schedule")
 public class ScheduleController {
 
     private final ScheduleRepo scheduleRepo;
