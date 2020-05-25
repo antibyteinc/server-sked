@@ -8,5 +8,5 @@ Vue.use(VueResource);
 new Vue({
     el: "#app",
     router,
-    render: h => h(App)
+    render: a => a(App)
 });
