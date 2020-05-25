@@ -23,6 +23,11 @@ public class TeacherController {
         return teacherRepo.findByUser(user);
     }
 
+    @GetMapping("/get-teachers-by-userId/{id}")
+    public List<Teacher> getTeachersByUserId(@PathVariable("id") User user) {
+        return teacherRepo.findByUser(user);
+    }
+
     @PostMapping()
     public Teacher add(@AuthenticationPrincipal User user, @RequestBody Teacher teacher) {
         teacher.setUser(user);

@@ -3,7 +3,11 @@
         <p>Знайти розклад</p>
         <input type="text" placeholder="Назва закладу" v-model="searchInstitution">
         <div class="search">
-            <a v-for="institution in inputInstitutions">{{institution.name}}</a>
+            <router-link :to="'/view/' + institution.userId"
+                         v-for="institution in inputInstitutions"
+                         :key="institution.id">
+                {{institution.name}}
+            </router-link>
         </div>
         <button>Дивитись</button>
     </div>
@@ -33,7 +37,8 @@
                             } else {
                                 let inst = {
                                     id: institution.id,
-                                    name: institution.name
+                                    name: institution.name,
+                                    userId: institution.user.id
                                 };
                                 this.inputInstitutions.push(inst);
                             }

@@ -23,7 +23,7 @@ public class SemesterController {
     }
 
     @GetMapping("{id}")
-    public List<Semester> getByInstitution(@PathVariable("id") Division division) {
+    public List<Semester> getByDivision(@PathVariable("id") Division division) {
         return semesterRepo.findByDivision(division);
     }
 

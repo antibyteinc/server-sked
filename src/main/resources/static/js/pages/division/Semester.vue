@@ -142,8 +142,7 @@
                 });
 
                 this.newSemester.name = "";
-                this.newSemester.start = null;
-                this.newSemester.finish = null;
+                this.setSemesterDateForInput();
             },
             removeSemester(id) {
                 this.semesterApi.delete({id: id}).then(res => {

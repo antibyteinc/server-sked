@@ -25,6 +25,11 @@ public class DivisionController {
         return divisionRepo.findAll();
     }
 
+    @GetMapping("/get-division-by-userId/{id}")
+    public List<Division> getDivisionByUserId(@PathVariable("id") User user) {
+        return divisionRepo.findByUser(user);
+    }
+
     @GetMapping("/user")
     public List<Division> getByUser(@AuthenticationPrincipal User user) {
         return divisionRepo.findByUser(user);
