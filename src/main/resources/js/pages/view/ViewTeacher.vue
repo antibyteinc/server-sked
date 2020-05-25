@@ -37,7 +37,8 @@
         }
     }
 </script>
-<style scoped>
+<style scoped
+>
     .teacher {
         width: 150px;
         height: 150px;
