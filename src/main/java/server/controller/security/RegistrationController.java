@@ -25,7 +25,6 @@ public class RegistrationController {
 
         if (username.equals("") || password.equals("")) {
             model.addAttribute("error", "Не всі поля заповнені.");
-            System.out.println(model.getAttribute("error"));
             return "registration";
         }
 
