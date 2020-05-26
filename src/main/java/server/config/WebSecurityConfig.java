@@ -12,7 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import server.service.UserService;
 
 @Configuration
-//@EnableWebSecurity
+@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     UserService userService;
@@ -48,7 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                             "/group/get-semesterRange/{id}",
                             "/institute/get-institute-by-userId/{id}",
                             "/teacher/get-teachers-by-userId/{id}",
-                            "/css/**").permitAll()
+                            "/css/**", "/js/**").permitAll()
                      //Все остальные страницы требуют аутентификации
                     .anyRequest().authenticated()
                 .and()
