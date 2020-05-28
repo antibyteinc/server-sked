@@ -51,4 +51,15 @@ public class GroupController {
     public void delete(@PathVariable("id") Group group) {
         groupRepo.delete(group);
     }
+
+    @GetMapping("/get-version/{id}")
+    public Long getVersion(@PathVariable("id") Group group) {
+        return group.getVersion();
+    }
+
+    @PutMapping("/update-version/{id}")
+    public void updateVersion(@PathVariable("id") Group group, @RequestBody Integer num) {
+        group.setVersion(group.getVersion() + num);
+        groupRepo.save(group);
+    }
 }

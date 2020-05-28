@@ -23,16 +23,4 @@ public class WebMvcConfig implements WebMvcConfigurer {
             container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/"));
         };
     }
-
-    @Bean
-    public FilterRegistrationBean encodingFilterRegistrationBean() {
-        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
-        registrationBean.setFilter(new CharacterEncodingFilter());
-        Map<String, String> params = new HashMap<>();
-        params.put("encoding", "UTF-8");
-        params.put("forceEncoding", "true");
-        registrationBean.setInitParameters(params);
-        registrationBean.addUrlPatterns("/");
-        return registrationBean;
-    }
 }

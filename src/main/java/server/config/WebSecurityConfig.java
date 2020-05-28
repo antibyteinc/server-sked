@@ -46,6 +46,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                             "/group/get-name/{id}",
                             "/division/get-id/{id}",
                             "/group/get-semesterRange/{id}",
+                            "/group/get-version/{id}",
+                            "/group/update-version/{id}",
                             "/institute/get-institute-by-userId/{id}",
                             "/teacher/get-teachers-by-userId/{id}",
                             "/css/**", "/js/**").permitAll()

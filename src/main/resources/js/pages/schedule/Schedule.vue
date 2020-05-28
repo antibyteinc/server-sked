@@ -408,6 +408,8 @@
             },
             //edit schedule
             addSchedule() {
+                this.$resource("/group/update-version{/id}").update({id: this.groupId}, 1);
+
                 this.newSchedule.lessonName = this.newLessonName;
                 this.newSchedule.lessonType = this.newLessonType;
                 this.newSchedule.teacherSurname = this.newTeacherSurname;

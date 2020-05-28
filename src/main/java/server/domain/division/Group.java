@@ -13,8 +13,10 @@ public class Group {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_department")
     private Department department;
+    private Long version;
 
     public Group() {
+        version = 0L;
     }
 
     public Long getId() {
@@ -39,5 +41,13 @@ public class Group {
 
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 }
