@@ -1,23 +1,28 @@
 <template>
     <div class="wrapper">
         <div class="wrapper__division panel panel-default col-md-8 col-md-offset-2">
-            <h3>Мої розклади</h3>
-            <div class="divisions">
+            <h3 class="text-center">Розклади</h3>
+            <div class="divisions" style="margin-top: 30px">
                 <div v-if="divisions.length > 0">
-                    <table class="division">
+                    <table class="institution table table-condensed">
+                        <thead>
                         <tr>
                             <th>id</th>
-                            <th>Назва</th>
-                            <th>Дата ств.</th>
+                            <th>Назва розкладу</th>
+                            <th>Дата створення</th>
+                            <th></th>
                             <th></th>
                         </tr>
-                        <tr v-for="division in divisions" :key="division.id">
-                            <td>{{division.id}}</td>
-                            <td>
-                                <button @click="switchDivision(division)">{{division.name}}</button>
-                            </td>
-                            <td>{{dateToString(division.lastModified)}}</td>
-                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="division in divisions" :key="division.id">
+                                <td>{{division.id}}</td>
+                                <td>
+                                    <button class="btn-division btn btn-default" @click="switchDivision(division)">{{division.name}}</button>
+                                </td>
+                                <td>{{dateToString(division.lastModified)}}</td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
                 <div v-else>
@@ -82,6 +87,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        margin-bottom: 60vh;
     }
 
     .wrapper__division {
@@ -91,5 +97,9 @@
 
     .division {
         /*width: 50%;*/
+    }
+
+    .btn-division {
+        max-width: 300px;
     }
 </style>

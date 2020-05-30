@@ -82,10 +82,7 @@
         margin-bottom: 10px;
     }
 
-    .department-form {
-        margin-top: 20px;
-        margin-bottom: 10px;
-    }
+
 
     .department-header {
         display: flex;

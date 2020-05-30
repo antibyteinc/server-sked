@@ -39,6 +39,7 @@
         line-height: 1;
         margin: 0;
         padding: 0;
+
     }
 
     h1, h2, h3, h4, h5, h6 {
@@ -69,6 +70,8 @@
         min-width: 320px;
         position: relative;
         overflow-x: hidden;
+        background: rgb(121,9,68);
+        background: linear-gradient(90deg, rgba(121,9,68,0.3393732492997199) 0%, rgba(255,0,202,0.14609593837535018) 58%);
     }
     .button {
         padding: 10px 15px;

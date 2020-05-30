@@ -7,7 +7,7 @@
                         <img class="logo-profile img-circle" src="/images/ic_navbar.png" alt="icon-navbar" width="50" height="50">
                     </div>
                     <ul class="menu">
-                        <li><a href="#" class="menu-link">
+                        <li><a href="https://24tv.ua/education/ru/ministerstvo_obrazovanija_i_nauki_ukrainy_tag2560/" class="menu-link">
                             Новини
                         </a></li>
                         <li><a href="#" class="menu-link">
@@ -37,6 +37,15 @@
                         <li><router-link to="/" class="menu-link">
                             Головна
                         </router-link></li>
+                        <li><a href="https://24tv.ua/education/ru/ministerstvo_obrazovanija_i_nauki_ukrainy_tag2560/" class="menu-link">
+                            Новини
+                        </a></li>
+                        <li><a href="#" class="menu-link">
+                            Контакти
+                        </a></li>
+                        <li><a href="#" class="menu-link">
+                            Про нас
+                        </a></li>
                         <li><router-link to="/profile" class="menu-link">
                             {{user}}
                         </router-link></li>

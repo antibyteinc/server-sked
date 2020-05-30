@@ -1,37 +1,49 @@
 <template>
     <div class="wrapper">
         <div class="wrapper__institution panel panel-default col-md-8 col-md-offset-2">
-            <h3>Мої розклади</h3>
+            <h3 class="text-center">Створенні розклади</h3>
             <div class="institutions">
                 <div v-if="institutions.length > 0">
-                    <table class="institution">
+                    <table class="institution table table-condensed">
+                        <thead>
                         <tr>
                             <th>id</th>
-                            <th>Назва</th>
-                            <th>Дата ств.</th>
+                            <th>Назва розкладу</th>
+                            <th>Дата створення</th>
                             <th></th>
                             <th></th>
                         </tr>
+                        </thead>
+                        <tbody>
                         <tr v-for="institution in institutions" :key="institution.id">
                             <td>{{institution.id}}</td>
                             <td>
-                                <button @click="switchInstitution(institution)">{{institution.name}}</button>
+                                <button class="btn-division btn btn-default" @click="switchInstitution(institution)" style="width: 250px">{{institution.name}}</button>
                             </td>
                             <td>{{dateToString(institution.lastModified)}}</td>
-                            <td><span class="glyphicon glyphicon-remove" @click="removeInstitution(institution.id)"></span></td>
+                            <td><span class="glyphicon glyphicon-remove"
+                                      @click="removeInstitution(institution.id)"></span></td>
                         </tr>
+                        </tbody>
                     </table>
                 </div>
                 <div v-else>
                     <p>Список розкладів порожній</p>
                 </div>
             </div>
-            <div class="institution-panel">
-                <input type="text" placeholder="Назва розкладу" v-model="newInstitution.name" @keyup.enter="addDivision">
-                <button @click="addDivision">Додати</button>
-            </div>
+
+            <div class="institution-panel col-lg-12">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Назва розкладу" v-model="newInstitution.name"
+                           @keyup.enter="addDivision">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" @click="addDivision">Додати</button>
+                    </span>
+                </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
         </div>
-        <component v-if="currentInstitution" is="semester" :institution="currentInstitution" @closeSemester="closeSemester"></component>
+        <component v-if="currentInstitution" is="semester" :institution="currentInstitution"
+                   @closeSemester="closeSemester"></component>
     </div>
 </template>
 <script>
@@ -124,14 +136,20 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        margin-top: 1%;
+        margin-bottom: 100vh;
     }
 
     .wrapper__institution {
-        margin-top: 50px;
-        padding: 10px;
+        margin-top: 60px;
+        padding: 50px;
     }
 
     .institution {
-        /*width: 50%;*/
+        margin-top: 50px;
+    }
+
+    .btn-division {
+        max-width: 300px;
     }
 </style>

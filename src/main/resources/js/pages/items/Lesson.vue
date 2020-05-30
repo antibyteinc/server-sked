@@ -1,34 +1,51 @@
 <template>
-    <div class="wrapper__lesson">
-        <div class="panel panel-default col-md-8 col-md-offset-2">
-            <div>
-                <h3>Предмети</h3>
-            </div>
-            <div class="lesson-form">
-                <input type="text" placeholder="Назва предмету" v-model="newLesson.name" @keyup.enter="addLesson">
-                <button @click="addLesson">Додати</button>
-            </div>
-            <div class="lessons" v-if="lessons.length > 0">
-                <div class="lesson">
-                    <table>
-                        <tr>
-                            <th>id</th>
-                            <th>Назва предмету</th>
-                            <th></th>
-                        </tr>
-                        <tr v-for="lesson in lessons">
-                            <td>{{lesson.id}}</td>
-                            <td>{{lesson.name}}</td>
-                            <td><span class="glyphicon glyphicon-remove" @click="removeLesson(lesson.id)"></span></td>
-                        </tr>
-                    </table>
+    <div class="wrapper">
+        <div class="wrapper__lesson">
+            <div class="panel panel-default col-md-4 col-md-offset-4">
+                <div>
+                    <h3 class="text-center">Предмети</h3>
+                </div>
+                <div class="lessons" v-if="lessons.length > 0" style="margin-top: 30px">
+                    <div class="lesson">
+                        <table class="table table-condensed table-hover">
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>Назва предмету</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="lesson in lessons">
+                                    <td>{{lesson.id}}</td>
+                                    <td>{{lesson.name}}</td>
+                                    <td><span class="glyphicon glyphicon-remove" @click="removeLesson(lesson.id)"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="teachers text-center" v-else style="margin-top: 20px">
+                    <p>Список викладачів порожній</p>
                 </div>
             </div>
-            <div class="teachers" v-else>
-                <p>Список предметів порожній</p>
+            <type-lesson></type-lesson>
+
+            <div class="panel-lesson-form panel panel-default col-md-4 col-md-offset-4">
+                <div class="panel-body">
+                    <div class="col-lg-12">
+                        <div class="input-group lesson-form">
+                            <input type="text" class="form-control" placeholder="Назва предмету" v-model="newLesson.name"
+                                   @keyup.enter="addLesson">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" @click="addLesson">Додати</button>
+                            </span>
+                        </div><!-- /input-group -->
+                    </div><!-- /.col-lg-6 -->
+                </div>
             </div>
         </div>
-        <type-lesson></type-lesson>
     </div>
 </template>
 <script>
@@ -43,7 +60,7 @@
         return -1;
     }
 
-    export  default {
+    export default {
         components: {
             TypeLesson
         },
@@ -89,6 +106,20 @@
         }
     }
 </script>
-<style>
+<style scoped>
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-top: 1%;
+        margin-bottom: 100vh;
+    }
+
+    .panel-lesson-form {
+        position: fixed; /* Фиксированное положение */
+        left: 0;
+        bottom: 0; /* Левый нижний угол */
+    }
+
 
 </style>

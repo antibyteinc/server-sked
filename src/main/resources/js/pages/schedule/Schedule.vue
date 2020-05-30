@@ -1,131 +1,151 @@
 <template>
-    <div class="wrapper__schedule">
-        <div>
-            <h3>Розклад групи {{groupName}}</h3>
-            <h4>Період з {{dateToString(startSemester)}} по {{dateToString(finishSemester)}}</h4>
-        </div>
-        <div class="schedule-mode">
-            <button :disabled="!mode" @click="toggleMode">Таблица</button>
-            <button :disabled="mode" @click="toggleMode">Плитка</button>
+    <div class="wrapper">
+        <div class="wrapper__schedule">
+            <div>
+                <h3 class="text-center">Розклад групи {{groupName}}</h3>
+                <h4 class="text-center" style="margin-top: 20px">Період з {{dateToString(startSemester)}} по
+                    {{dateToString(finishSemester)}}</h4>
+            </div>
+            <div class="schedule-mode text-center" style="margin-top: 20px; margin-bottom: 20px">
+                <button class="btn btn-default" :disabled="!mode" @click="toggleMode">Таблица</button>
+                <button class="btn btn-default" :disabled="mode" @click="toggleMode">Плитка</button>
 
-            <div>
-                <label>
-                    макс. предметів в день <input type="text" placeholder="макс. предметів в день" v-model="maxLessonsInDay">
-                </label>
+                <!--                <div>-->
+                <!--                    <label>-->
+                <!--                        макс. предметів в день <input type="text" placeholder="макс. предметів в день" v-model="maxLessonsInDay">-->
+                <!--                    </label>-->
+                <!--                </div>-->
             </div>
-        </div>
-        <div class="schedule-form">
-            <select v-model="newSchedule.lessonNumber">
-                <option :value="num" v-for="num in maxLessonsInDay">{{num}}</option>
-            </select>
-            <div>
-                <input type="text" placeholder="Назва предмету" v-model="newLessonName">
-                <div class="search">
-                    <p v-for="name in lessonNames" @click="chooseLesson(name)">{{name}}</p>
+            <div class="schedules" v-if="!mode">
+                <div class="schedules" v-if="schedules.length > 0">
+                    <div class="schedule">
+                        <table class="table table-condensed">
+                            <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>#</th>
+                                <th>Назва предмету</th>
+                                <th>Назва типу предмета</th>
+                                <th>Призвище викладача</th>
+                                <th>Корпус</th>
+                                <th>Аудиторія</th>
+                                <th>Дата</th>
+                                <th>Примітка</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="schedule in schedules">
+                                <td>{{schedule.id}}</td>
+                                <td>{{schedule.lessonNumber}}</td>
+                                <td>{{schedule.lessonName}}</td>
+                                <td>{{schedule.lessonType}}</td>
+                                <td>{{schedule.teacherSurname}}</td>
+                                <td>{{schedule.building}}</td>
+                                <td>{{schedule.cabinet}}</td>
+                                <td>{{dateToString(schedule.lessonDate)}}</td>
+                                <td>{{schedule.note}}</td>
+                                <td><span class="glyphicon glyphicon-remove"
+                                          @click="removeSchedule(schedule.id)"></span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="schedules" v-else>
+                    <p>Список розкладу порожній</p>
                 </div>
             </div>
-            <div>
-                <input type="text" placeholder="Назва типу предмета" v-model="newLessonType">
-                <div class="search">
-                    <p v-for="name in lessonTypeNames" @click="chooseLessonType(name)">{{name}}</p>
-                </div>
-            </div>
-            <div>
-                <input type="text" placeholder="Призвище викладача" v-model="newTeacherSurname">
-                <div class="search">
-                    <p v-for="surname in surnamesTeachers" @click="chooseTeacher(surname)">{{surname}}</p>
-                </div>
-            </div>
-
-            <input type="text" placeholder="Корпус" v-model="newSchedule.building">
-            <input type="text" placeholder="Аудиторія" v-model="newSchedule.cabinet">
-            <input type="date" min="" max="" placeholder="Дата" v-model="newSchedule.lessonDate">
-            <input type="text" placeholder="Примітка" v-model="newSchedule.note">
-            <button @click="addSchedule">Додати</button>
-        </div>
-        <div class="schedules" v-if="!mode">
-            <div class="schedules" v-if="schedules.length > 0">
+            <div class="schedules" v-else>
                 <div class="schedule">
                     <table>
                         <tr>
-                            <th>id</th>
-                            <th>#</th>
-                            <th>Назва предмету</th>
-                            <th>Назва типу предмета</th>
-                            <th>Призвище викладача</th>
-                            <th>Корпус</th>
-                            <th>Аудиторія</th>
-                            <th>Дата</th>
-                            <th>Примітка</th>
-                            <th></th>
+                            <td v-for="week in weeks">
+                                <!--                                <div class="week">{{week}}</div>-->
+                            </td>
                         </tr>
-                        <tr v-for="schedule in schedules">
-                            <td>{{schedule.id}}</td>
-                            <td>{{schedule.lessonNumber}}</td>
-                            <td>{{schedule.lessonName}}</td>
-                            <td>{{schedule.lessonType}}</td>
-                            <td>{{schedule.teacherSurname}}</td>
-                            <td>{{schedule.building}}</td>
-                            <td>{{schedule.cabinet}}</td>
-                            <td>{{dateToString(schedule.lessonDate)}}</td>
-                            <td>{{schedule.note}}</td>
-                            <td><span class="glyphicon glyphicon-remove" @click="removeSchedule(schedule.id)"></span>
+                        <tr v-for="dayNumber in 7">
+                            <td class="days" v-for="day in getWeekDayInSemester(dayNumber)">
+                                <div class="day">
+                                    <div class="day-header">{{dateToString(day)}}</div>
+                                    <div class="day-body">
+                                        <div class="lessons">
+                                            <div class="lesson" v-for="lesson in getLessonsByDate(day)">
+                                                <div v-if="dateToString(lesson.lessonDate) === dateToString(day)">
+                                                    <div class="lesson-content" v-if="lesson.note !== 'empty'">
+                                                        <div class="lesson-item" @click="">
+                                                            <div class="lesson-body">
+                                                                <!--                                                                {{lesson.lessonNumber}}-->
+                                                                <p style="margin: 0; margin-bottom: 3px">
+                                                                    {{lesson.lessonName}}</p>
+                                                                <p style="margin: 0; margin-bottom: 3px">
+                                                                    {{lesson.lessonType}}</p>
+                                                                <p style="margin: 0; margin-bottom: 3px">
+                                                                    {{lesson.teacherSurname}}</p>
+                                                                <p style="margin: 0; margin-bottom: 3px">
+                                                                    {{lesson.building}} {{lesson.cabinet}}</p>
+                                                                <p style="margin: 0; margin-bottom: 3px">
+                                                                    {{lesson.note}}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="lesson-btn">
+                                                    <span class="glyphicon glyphicon-remove"
+                                                          @click="removeSchedule(lesson.id)"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="lesson-empty" v-else
+                                                         @click="toggleLesson(lesson.lessonDate, lesson.lessonNumber)">
+                                                        <span class="glyphicon glyphicon-plus"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="day-footer">
+                                        <span class="day-btn-add glyphicon glyphicon-plus"
+                                              @click="toggleDay(day)"></span>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     </table>
                 </div>
             </div>
-            <div class="schedules" v-else>
-                <p>Список розкладу порожній</p>
-            </div>
         </div>
-        <div class="schedules" v-else>
-            <div class="schedule">
-                <table>
-                    <tr>
-                        <td v-for="week in weeks">
-                            <div class="week">{{week}}</div>
-                        </td>
-                    </tr>
-                    <tr v-for="dayNumber in 7">
-                        <td class="days" v-for="day in getWeekDayInSemester(dayNumber)">
-                            <div class="day">
-                                <div class="day-header">{{dateToString(day)}}</div>
-                                <div class="day-body">
-                                    <div class="lessons">
-                                        <div class="lesson" v-for="lesson in getLessonsByDate(day)">
-                                            <div v-if="dateToString(lesson.lessonDate) === dateToString(day)">
-                                                <div class="lesson-content" v-if="lesson.note !== 'empty'">
-                                                    <div class="lesson-item" @click="">
-                                                        <div class="lesson-body">
-                                                            {{lesson.lessonNumber}}
-                                                            {{lesson.lessonName}}
-                                                            {{lesson.lessonType}}
-                                                            {{lesson.teacherSurname}}
-                                                            {{lesson.building}}
-                                                            {{lesson.cabinet}}
-                                                            {{lesson.note}}
-                                                        </div>
-                                                    </div>
-                                                    <div class="lesson-btn">
-                                                    <span class="glyphicon glyphicon-remove"
-                                                          @click="removeSchedule(lesson.id)"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="lesson-empty" v-else @click="toggleLesson(lesson.lessonDate, lesson.lessonNumber)">
-                                                    <span class="glyphicon glyphicon-plus"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="day-footer">
-                                    <span class="day-btn-add glyphicon glyphicon-plus" @click="toggleDay(day)"></span>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
+
+        <div class="panel-schedule-form panel panel-default col-md-10 col-md-offset-1">
+            <div class="panel-body">
+                <div class="col-lg-12">
+                    <div class="schedule-form list-inline">
+                        <select v-model="newSchedule.lessonNumber">
+                            <option :value="num" v-for="num in maxLessonsInDay">{{num}}</option>
+                        </select>
+                        <input type="text" placeholder="Назва предмету" v-model="newLessonName" class="form-control">
+                        <div class="search">
+                            <p v-for="name in lessonNames" @click="chooseLesson(name)">{{name}}</p>
+                        </div>
+                        <input type="text" placeholder="Назва типу предмета" v-model="newLessonType"
+                               class="form-control">
+                        <div class="search">
+                            <p v-for="name in lessonTypeNames" @click="chooseLessonType(name)">{{name}}</p>
+                        </div>
+
+                        <input type="text" placeholder="Призвище викладача" v-model="newTeacherSurname"
+                               class="form-control">
+                        <div class="search">
+                            <p v-for="surname in surnamesTeachers" @click="chooseTeacher(surname)">{{surname}}</p>
+                        </div>
+
+
+                        <input type="text" placeholder="Корпус" v-model="newSchedule.building" class="form-control">
+                        <input type="text" placeholder="Аудиторія" v-model="newSchedule.cabinet" class="form-control">
+                        <input type="date" min="" max="" placeholder="Дата" v-model="newSchedule.lessonDate"
+                               class="form-control">
+                        <input type="text" placeholder="Примітка" v-model="newSchedule.note" class="form-control">
+                        <button @click="addSchedule" class="btn btn-default">Додати</button>
+                    </div>
+                </div><!-- /.col-lg-6 -->
             </div>
         </div>
     </div>
@@ -241,7 +261,7 @@
         },
         data() {
             return {
-                mode: true,
+                mode: false,
 
                 institutionId: "",
                 groupName: "",
@@ -473,18 +493,24 @@
     }
 </script>
 <style scoped>
-    .wrapper__schedule {
-        margin: 0 auto;
-        width: 100%;
-        /*max-width: 1600px;*/
-        position: absolute;
-        z-index: 100;
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-top: 1%;
+        margin-bottom: 70vh;
     }
 
-    .schedule-form {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
+    .panel-schedule-form {
+        position: fixed; /* Фиксированное положение */
+        left: 0;
+        bottom: 0; /* Левый нижний угол */
+    }
+
+
+    .schedules {
+        margin-left: 20px;
+        margin-right: 20px;
     }
 
     .search {
@@ -554,6 +580,7 @@
         display: flex;
         flex-direction: row;
         justify-content: center;
+        margin-bottom: 20px;
     }
 
     .day-footer {
@@ -585,6 +612,7 @@
         /*border: 1px solid black;*/
         border-radius: 8px;
         background-color: white;
+        margin: 5px;
     }
 
     .lesson-empty:hover {
@@ -609,6 +637,7 @@
         border: 1px solid black;
         border-radius: 8px;
         background-color: white;
+        margin: 5px;
     }
 
     .lesson-item {
@@ -619,7 +648,7 @@
     .lesson-body {
         display: flex;
         flex-direction: column;
-        justify-content: space-around;
+        /*justify-content: space-around;*/
     }
 
     .lesson-btn {
@@ -628,6 +657,12 @@
         padding: 2px;
         justify-content: space-between;
         border-left: 1px solid black;
+    }
+
+    .schedule-form {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
     }
 </style>
 

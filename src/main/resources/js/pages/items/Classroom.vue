@@ -1,37 +1,50 @@
 <template>
-    <div class="wrapper__classroom">
-        <div class="panel panel-default col-md-8 col-md-offset-2">
-            <div>
-                <h3>Аудиторії</h3>
-            </div>
-            <div class="classroom-form">
-                <input type="text" placeholder="Корпус" v-model="newClassroom.building" @keyup.enter="addClassroom">
-                <input type="text" placeholder="Кабінет" v-model="newClassroom.cabinet" @keyup.enter="addClassroom">
-                <input type="text" placeholder="Назва" v-model="newClassroom.name" @keyup.enter="addClassroom">
-                <button @click="addClassroom">Додати</button>
-            </div>
-            <div class="classrooms" v-if="classrooms.length > 0">
-                <div class="classroom">
-                    <table>
-                        <tr>
-                            <th>id</th>
-                            <th>Корпус</th>
-                            <th>Кабінет</th>
-                            <th>Назва</th>
-                            <th></th>
-                        </tr>
-                        <tr v-for="classroom in classrooms">
-                            <td>{{classroom.id}}</td>
-                            <td>{{classroom.building}}</td>
-                            <td>{{classroom.cabinet}}</td>
-                            <td>{{classroom.name}}</td>
-                            <td><span class="glyphicon glyphicon-remove" @click="removeClassroom(classroom.id)"></span></td>
-                        </tr>
-                    </table>
+    <div class="wrapper">
+        <div class="wrapper__classroom">
+            <div class="panel panel-default col-md-6 col-md-offset-3">
+                <div>
+                    <h3 class="text-center">Аудиторії</h3>
+                </div>
+                <div class="classrooms" v-if="classrooms.length > 0" style="margin-top: 30px">
+                    <div class="classroom">
+                        <table class="table table-condensed table-hover">
+                            <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>Корпус</th>
+                                <th>Кабінет</th>
+                                <th>Назва</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="classroom in classrooms">
+                                <td>{{classroom.id}}</td>
+                                <td>{{classroom.building}}</td>
+                                <td>{{classroom.cabinet}}</td>
+                                <td>{{classroom.name}}</td>
+                                <td><span class="glyphicon glyphicon-remove" @click="removeClassroom(classroom.id)"></span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="classrooms text-center" v-else style="margin-top: 20px">
+                    <p>Список викладачів порожній</p>
                 </div>
             </div>
-            <div class="classrooms" v-else>
-                <p>Список кабінетів порожній</p>
+
+            <div class="panel-building-form panel panel-default col-md-6 col-md-offset-3">
+                <div class="panel-body">
+                    <div class="classroom-form">
+                        <form action="" class="form-inline">
+                            <input type="text" placeholder="Корпус" class="form-control" v-model="newClassroom.building" @keyup.enter="addClassroom">
+                            <input type="text" placeholder="Кабінет" class="form-control" v-model="newClassroom.cabinet" @keyup.enter="addClassroom">
+                            <input type="text" placeholder="Назва" class="form-control" v-model="newClassroom.name" @keyup.enter="addClassroom">
+                            <button class="btn btn-default" @click="addClassroom">Додати</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -93,6 +106,18 @@
         }
     }
 </script>
-<style>
+<style scoped>
 
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-top: 1%;
+        margin-bottom: 100vh;
+    }
+
+    .panel-building-form {
+        position: fixed; /* Фиксированное положение */
+        left: 0; bottom: 0; /* Левый нижний угол */
+    }
 </style>

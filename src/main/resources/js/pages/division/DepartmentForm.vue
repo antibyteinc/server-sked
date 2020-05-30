@@ -33,5 +33,8 @@
     }
 </script>
 <style>
-
+    .department-form {
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
 </style>

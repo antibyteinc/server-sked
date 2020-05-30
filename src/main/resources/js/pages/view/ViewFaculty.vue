@@ -5,7 +5,7 @@
                 <div class="wrapper__faculty">
                     <div class="faculties" v-if="faculties.length > 0">
                         <div class="faculty" v-for="faculty in faculties">
-                            <button @click="switchFaculty(faculty)">{{faculty.name}}</button>
+                            <button class="btn btn-default" @click="switchFaculty(faculty)" style="width: 50px; ">{{faculty.name}}</button>
                         </div>
                     </div>
                     <div class="faculties" v-else>

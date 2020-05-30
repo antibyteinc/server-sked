@@ -1,27 +1,33 @@
 <template>
     <div class="wrapper">
         <div class="wrapper__semester">
-            <div class="panel panel-default col-md-8 col-md-offset-2">
-                <div class="semester-header">
-                    <h3>Мої семестри у закладі <b>{{institution.name}}</b></h3>
+            <div class="sem panel panel-default col-md-8 col-md-offset-2">
+                <div class="semester-header text-center">
+<!--                    <h3>Мої семестри у закладі <b>{{institution.name}}</b></h3>-->
+                    <h3>Семестри</h3>
                 </div>
                 <div class="semester-content">
                     <div v-if="semesters.length > 0">
-                        <table>
+                        <table class="table table-condensed">
+                            <thead>
                             <tr>
                                 <th>id</th>
                                 <th>Назва</th>
                                 <th>Початок</th>
                                 <th>Кінец</th>
+                                <th></th>
                             </tr>
-                            <tr v-for="semester in semesters">
-                                <td>{{semester.id}}</td>
-<!--                                <td><router-link :to="'/my-faculties/' + semester.id + '/' + semester.name"><button>{{semester.name}}</button></router-link></td>-->
-                                <td><button @click="switchSemester(semester)">{{semester.name}}</button></td>
-                                <td>{{dateToString(semester.start)}}</td>
-                                <td>{{dateToString(semester.finish)}}</td>
-                                <td><span class="glyphicon glyphicon-remove" @click="removeSemester(semester.id)"></span></td>
-                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="semester in semesters">
+                                    <td>{{semester.id}}</td>
+                                    <!--                                <td><router-link :to="'/my-faculties/' + semester.id + '/' + semester.name"><button>{{semester.name}}</button></router-link></td>-->
+                                    <td><button class="btn-division btn btn-default" @click="switchSemester(semester)" style="width: 250px">{{semester.name}}</button></td>
+                                    <td>{{dateToString(semester.start)}}</td>
+                                    <td>{{dateToString(semester.finish)}}</td>
+                                    <td><span class="glyphicon glyphicon-remove" @click="removeSemester(semester.id)"></span></td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                     <div v-else>
@@ -29,13 +35,17 @@
                     </div>
                 </div>
                 <div class="semester-footer">
-                    <input type="text" placeholder="Назва семестру" v-model="newSemester.name" @keyup.enter="addSemester">
-                    Початок: <input type="date" v-model="newSemester.start">
-                    Кінец: <input type="date" v-model="newSemester.finish">
-                    <button @click="addSemester">Додати</button>
+                    <input type="text" class="input-semester form-control" placeholder="Назва семестру" v-model="newSemester.name" @keyup.enter="addSemester">
+                    Початок: <label>
+                    <input type="date" v-model="newSemester.start">
+                </label>
+                    Кінец: <label>
+                    <input type="date" v-model="newSemester.finish">
+                </label>
+                    <button class="btn-semester btn btn-default" type="button" @click="addSemester">Додати</button>
                 </div>
             </div>
-            <span class="glyphicon glyphicon-remove" @click="close"></span>
+<!--            <span class="glyphicon glyphicon-remove" @click="close"></span>-->
         </div>
         <component v-if="currentSemester" is="faculty" :semester="currentSemester" @closeFaculty="closeFaculty"></component>
     </div>
@@ -160,5 +170,25 @@
     }
 </script>
 <style scoped>
+    .sem {
+        padding: 50px;
+    }
 
+    .semester-header {
+        margin-bottom: 50px;
+    }
+
+    .semester-footer {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .input-semester {
+        max-width: 700px;
+        margin-right: 30px;
+    }
+
+    .btn-semester {
+        margin-left: 20px;
+    }
 </style>

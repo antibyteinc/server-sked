@@ -14,9 +14,10 @@
                 </div>
             </div>
         </div>
-        <div class="course" v-else>
+        <div class="courses" v-else>
             <p>Список курсів порожній</p>
         </div>
+
         <div class="course-form">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Додати курс" v-model="newCourse.name" @keyup.enter="addCourse">

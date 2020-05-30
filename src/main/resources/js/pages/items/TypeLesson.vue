@@ -1,31 +1,39 @@
 <template>
     <div class="wrapper__type-lesson">
-        <div class="panel panel-default col-md-8 col-md-offset-2">
+        <div class="panel panel-default col-md-4 col-md-offset-4">
             <div>
-                <h3>Тип предмету</h3>
+                <h3 class="text-center">Тип предмету</h3>
             </div>
-            <div class="type-lesson-form">
-                <input type="text" placeholder="Назва типу предмету" v-model="newTypeLesson.name" @keyup.enter="addTypeLesson">
-                <button @click="addTypeLesson">Додати</button>
-            </div>
-            <div class="type-lessons" v-if="typeLessons.length > 0">
+            <div class="col-lg-12">
+                <div class="input-group type-lesson-form" style="margin-top: 30px; margin-bottom: 30px">
+                    <input type="text" class="form-control" placeholder="Назва типу предмету" v-model="newTypeLesson.name" @keyup.enter="addTypeLesson">
+                    <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" @click="addTypeLesson">Додати</button>
+                            </span>
+                </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+            <div class="type-lessons" v-if="typeLessons.length > 0" style="margin-top: 30px">
                 <div class="type-lesson">
-                    <table>
-                        <tr>
-                            <th>id</th>
-                            <th>Назва типу предмету</th>
-                            <th></th>
-                        </tr>
-                        <tr v-for="typeLesson in typeLessons">
-                            <td>{{typeLesson.id}}</td>
-                            <td>{{typeLesson.name}}</td>
-                            <td><span class="glyphicon glyphicon-remove" @click="removeTypeLesson(typeLesson.id)"></span></td>
-                        </tr>
+                    <table class="table table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>Назва типу предмету</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="typeLesson in typeLessons">
+                                <td>{{typeLesson.id}}</td>
+                                <td>{{typeLesson.name}}</td>
+                                <td><span class="glyphicon glyphicon-remove" @click="removeTypeLesson(typeLesson.id)"></span></td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
-            <div class="teachers" v-else>
-                <p>Список типу предметів порожній</p>
+            <div class="type-lessons text-center" v-else style="margin-top: 20px">
+                <p>Список викладачів порожній</p>
             </div>
         </div>
     </div>

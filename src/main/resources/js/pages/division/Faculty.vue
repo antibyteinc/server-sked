@@ -5,7 +5,7 @@
                 <div class="wrapper__faculty">
                     <div class="faculties" v-if="faculties.length > 0">
                         <div class="faculty" v-for="faculty in faculties">
-                            <button @click="switchFaculty(faculty)">{{faculty.name}}</button>
+                            <button class="btn btn-default" @click="switchFaculty(faculty)" style="width: 50px; ">{{faculty.name}}</button>
                             <span class="glyphicon glyphicon-remove" @click="removeFaculty(faculty.id)"></span>
                         </div>
                     </div>
@@ -25,7 +25,7 @@
                 </div>
                 <course :currentFaculty="currentFaculty" :faculties="faculties"></course>
             </div>
-            <span class="glyphicon glyphicon-remove" @click="close"></span>
+<!--            <span class="glyphicon glyphicon-remove" @click="close"></span>-->
         </div>
     </div>
 </template>
@@ -129,6 +129,7 @@
         flex-direction: row;
         flex-wrap: nowrap;
         width: 100%;
+        padding: 10px;
         max-width: 1370px;
         overflow-y: auto;
         margin: 20px;

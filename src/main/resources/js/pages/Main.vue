@@ -6,11 +6,21 @@
                     Знайти розклад
                 </h2>
                 <form class="start-search">
-                    <input type="text" class="search-input">
-                    <button class="search-btn">
-                        <i class="fas fa-search"></i>
-                    </button>
+                    <input type="text" class="search-input" placeholder="Назва закладу" v-model="searchInstitution">
+                    <div class="search">
+
+                    </div>
                 </form>
+                <div class="list-result">
+                    <router-link :to="'/view-division/' + institution.userId"
+                                 v-for="institution in inputInstitutions"
+                                 :key="institution.id">
+                        <div class="block-result">
+                            {{institution.name}}
+                        </div>
+                    </router-link>
+
+                </div>
             </div>
         </section>
 
@@ -25,7 +35,7 @@
                             Завантажити додаток.
                             Розклад твого закладу буде завжди з тобою
                         </h2>
-                        <a href="#" class="button">
+                        <a href="https://play.google.com/store/apps/details?id=kozyriatskyi.anton.sked" class="button">
                             Завантажити
                         </a>
                     </div>
@@ -118,6 +128,16 @@
         }
     }
 </script>
-<style>
+<style scoped>
+    .list-result {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+    }
 
+    .block-result {
+        margin-left: 20px;
+        margin-top: 20px;
+        border-bottom: 1px solid black;
+    }
 </style>
