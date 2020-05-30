@@ -50,7 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                             "/group/update-version/{id}",
                             "/institute/get-institute-by-userId/{id}",
                             "/teacher/get-teachers-by-userId/{id}",
-                            "/css/**", "/js/**").permitAll()
+                            "/css/**", "/js/**", "/images/**").permitAll()
                      //Все остальные страницы требуют аутентификации
                     .anyRequest().authenticated()
                 .and()

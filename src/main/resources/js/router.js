@@ -36,7 +36,8 @@ const routes = [
     {path: "/view-division/:userId", component: ViewDivision, props: true},
     {path: "/view-schedules/:groupId", component: ViewSchedule, props: true},
     {path: "/view-institute/:userId", component: ViewInstitute, props: true},
-    {path: "/view-teacher/:userId", component: ViewTeacher, props: true}
+    {path: "/view-teacher/:userId", component: ViewTeacher, props: true},
+    {path: "/", redirect: "/main"}
 ];
 
 export default new VueRouter({
